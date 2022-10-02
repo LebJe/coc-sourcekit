@@ -5,7 +5,8 @@ import {
   ServerOptions,
   workspace,
   services,
-  LanguageClientOptions
+  LanguageClientOptions,
+  window
 } from 'coc.nvim'
 
 interface SourceKitConfig {
@@ -29,7 +30,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
     try {
       commandPath = (await workspace.runCommand('which sourcekit-lsp')).trim()
     } catch {
-      workspace.showMessage("Cannot find sourcekit-lsp. Install Xcode 11.4+, swift, or set `sourcekit.commandPath` in your coc-config.")
+      
+      window.showErrorMessage("Cannot find sourcekit-lsp. Install Xcode, swift, or set `sourcekit.commandPath` in your coc-config.")
       return
     }
   }
@@ -44,7 +46,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
           const computedSdkPath = (await workspace.runCommand(`xcrun --sdk ${sdk} --show-sdk-path`)).trim()
           args = args.concat(['-Xswiftc', '-sdk', '-Xswiftc', computedSdkPath])
       } catch {
-          workspace.showMessage(`Cannot find SDK path for '${sdk}'. Change 'sourcekit.sdk' or set 'sourcekit.sdkPath' in your coc-config.`)
+        window.showErrorMessage(`Cannot find SDK path for '${sdk}'. Change 'sourcekit.sdk' or set 'sourcekit.sdkPath' in your coc-config.`)
       }
   }
 
