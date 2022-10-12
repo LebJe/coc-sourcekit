@@ -1,30 +1,16 @@
 module.exports = {
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaVersion: 2018,
-    sourceType: 'module'
-  },
-  plugins: ['@typescript-eslint'],
   env: {
     node: true,
-    es6: true
   },
-  extends: ['eslint:recommended'],
+  parser: '@typescript-eslint/parser',
+  extends: ['plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
   rules: {
-    semi: ['error', 'never']
+    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/no-namespace': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
   },
-  overrides: [
-    {
-      files: ['**/*.ts'],
-      extends: ['plugin:@typescript-eslint/recommended'],
-      rules: {
-        '@typescript-eslint/no-use-before-define': 'off',
-        '@typescript-eslint/semi': ['error', 'never'],
-        '@typescript-eslint/member-delimiter-style': [
-          'error',
-          { multiline: { delimiter: 'none' } }
-        ]
-      }
-    }
-  ]
 };

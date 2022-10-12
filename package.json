@@ -1,39 +1,59 @@
 {
-  "name": "coc-sourcekit",
-  "version": "0.0.2",
-  "description": "SourceKit-LSP extension for CoC",
-  "author": "Klaas Pieter Annema <kp@annema.me",
+  "name": "coc-sourcekit-lsp",
+  "version": "0.0.0-development",
+  "description": "CoC extension for SourceKitLSP",
+  "author": "Klaas Pieter Annema <kp@annema.me>, eebJe <51171427+LebJe@users.noreply.github.com>",
   "license": "MIT",
-  "main": "lib/extension.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/LebJe/coc-sourcekit.git"
-  },
-  "engines": {
-    "coc": "^0.0.82"
-  },
+  "main": "lib/index.js",
   "keywords": [
     "coc.nvim",
-    "languageserver",
+	"vim",
+    "neovim",
+	"languageserver",
     "swift",
     "c",
     "cpp",
     "c++",
     "objc",
-    "vim",
-    "neovim"
+	"objcpp",
+	"objective-c",
+	"objective-cpp"
   ],
+  "engines": {
+    "coc": "^0.0.80"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LebJe/coc-sourcekit.git"
+  },
   "scripts": {
+    "lint": "eslint src --ext ts",
     "clean": "rimraf lib",
-    "build": "tsc -p tsconfig.json",
-    "build:watch": "tsc --watch -p tsconfig.json",
-    "prepare": "yarn clean && yarn build",
-    "link:add": "node ./scripts/link.js add",
-    "link:remove": "node ./scripts/link.js remove",
-    "lint": "eslint . --ext .ts,.js"
+    "watch": "node esbuild.js --watch",
+    "build": "node esbuild.js",
+    "prepare": "node esbuild.js"
+  },
+  "prettier": {
+    "singleQuote": false,
+    "printWidth": 120,
+    "semi": true,
+    "useTabs": true
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.13.0",
+    "coc.nvim": "^0.0.80",
+    "esbuild": "^0.14.24",
+    "eslint": "^8.10.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.5.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.6.2"
   },
   "activationEvents": [
-    "onLanguage:swift",
+	"onWorkspaceContains:Package.swift",
+	"onLanguage:swift",
     "onLanguage:c",
     "onLanguage:cpp",
     "onLanguage:objective-c",
@@ -50,7 +70,8 @@
           "description": "Enable SourceKit extension"
         },
         "sourcekit.commandPath": {
-          "type": "string"
+          "type": "string",
+		  "description": "The path to the sourcekit-lsp executable, by default the executable is searched for in `PATH`."
         },
         "sourcekit.trace.server": {
           "type": "string",
@@ -88,17 +109,5 @@
 		}
       }
     }
-  },
-  "devDependencies": {
-    "@types/node": "^18.7.23",
-    "@typescript-eslint/eslint-plugin": "^5.38.0",
-    "@typescript-eslint/parser": "^5.38.0",
-    "coc.nvim": "^0.0.82",
-    "eslint": "^8.24.0",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.8.3"
-  },
-  "dependencies": {
-    "tslib": "^2.4.0"
   }
 }
