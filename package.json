@@ -1,6 +1,6 @@
 {
   "name": "coc-sourcekit",
-  "version": "0.0.0-development",
+  "version": "0.0.2",
   "description": "CoC extension for SourceKit-LSP",
   "author": "Klaas Pieter Annema <kp@annema.me>, LebJe <51171427+LebJe@users.noreply.github.com>",
   "license": "MIT",
